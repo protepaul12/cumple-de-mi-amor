@@ -1,1 +1,295 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>para Andreaita ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #8a0032 0%, #1a000b 100%);
+      filter: brightness(1.3) contrast(1.25) saturate(1.4);
+      font-family: 'Great Vibes', cursive;
+      color: #d48aa3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+      position: relative;
+    }
+    
+    .boton, .enlace {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.9rem;
+      padding: 1rem 2.6rem;
+      border-radius: 2rem;
+      border: 3px solid #c72b5a;
+      background-color: #5e0b2f;
+      color: #ffb3c9;
+      cursor: pointer;
+      box-shadow: 0 0 18px #ff4f85, 0 0 30px #c72b5a;
+      margin: 0.5rem;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      z-index: 1;
+      user-select: none;
+      text-shadow: 0 0 8px #ff4f85, 0 0 16px #a11a41;
+    }
+    .boton:hover, .enlace:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px #f79f9f;
+      background-color: #6d0d29;
+    }
+
+    .carta {
+      max-height: 80vh;
+      overflow-y: auto;
+      background: #3a0a19;
+      border-radius: 2.5rem;
+      padding: 3rem 2.5rem;
+      max-width: 600px;
+      box-shadow: 0 0 45px rgba(255, 60, 120, 0.6), 0 0 90px rgba(255, 0, 80, 0.4);
+      backdrop-filter: blur(6px);
+      color: #e8c6cf;
+      line-height: 1.6;
+      text-align: center;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      display: none;
+      position: relative;
+      z-index: 1;
+      font-size: 1.05rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+    .carta.visible {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
+    }
+    p {
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      color: #f2d7dd;
+      text-shadow: 0 0 12px #ff75a0, 0 0 22px #ff2e6f, 0 0 40px #a40038;
+      text-align: left;
+    }
+    .firma-pequena {
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+      opacity: 0.85;
+      display: block;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Animación de deslice con efecto fluido */
+    .modal-video {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .modal-video.visible {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-contenido {
+      position: relative;
+      width: 90%;
+      max-width: 700px;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(255, 79, 133, 0.8);
+      /* Empieza abajo y con escala menor para deslizarse hacia arriba */
+      transform: translateY(80px) scale(0.9);
+      opacity: 0;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+    }
+    .modal-video.visible .modal-contenido {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    .modal-contenido iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .cerrar-modal {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 2rem;
+      color: #ffb3c9;
+      cursor: pointer;
+      z-index: 101;
+      text-shadow: 0 0 8px #000;
+      user-select: none;
+    }
+    .cerrar-modal:hover {
+      color: #ff4f85;
+    }
+
+    ::-webkit-scrollbar { display: none; }
+    * { scrollbar-width: none; }
+  </style>
+</head>
+<body>
+
+  <canvas id="estrellas"></canvas>
+
+  <audio id="musica" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_5f2bddee27.mp3?filename=love-110066.mp3" type="audio/mp3">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <button id="abrir" class="boton">Abrir carta 💌</button>
+
+  <div id="carta" class="carta">
+    <p>
+      Mi querida Andreaita, hoy quiero detenerme y dedicarte palabras que nacen desde lo más profundo de mi corazón, Este día no es uno cualquiera, es tu cumpleaños Nubecita, y con él llega la oportunidad de celebrar tu vida, tu esencia y todo lo que significas para mí.<br><br>
+      Desde hace tiempo siento que nuestras miradas y encuentros no eran casualidad. Sé que nos veíamos de antes y creo que he estado sintiendo cosas por ti desde entonces, cosas que fueron creciendo poco a poco hasta convertirse en algo inmeso. Hoy estoy super seguro que tú eres para mí. No lo digo con dudas ni con miedo, lo digo con la certeza de alguien que ha encontrado en ti lo que siempre buscó.<br><br>
+      Tu sonrisa tiene la capacidad de iluminar incluso los días más grises, tu voz me transmite calma, y tu forma de ser me inspira a querer ser mejor cada día, En ti encontré no solo a alguien especial, sino a la persona que me hace creer en el amor verdadero, ese que no se explica con palabras, sino que se siente en cada gesto, en cada mirada y en cada instante compartido.<br><br>
+      En tu cumpleaños quiero desearte todo lo que mereces, felicidad infinita, sueños cumplidos, momentos inolvidables y la certeza de que eres profundamente amada. Porque no solo celebro el día en que naciste, celebro también la fortuna inmensa de haberte conocido y de poder decirte lo que siento.<br><br>
+      Andreaita, te amo. te amo con la seguridad de que no hay nada que pueda apagar lo que siento, te amo porque contigo todo tiene sentido, porque contigo aprendí que el amor no es solo palabras bonitas, sino actos, detalles y la decisión de elegirte cada día ;((<br><br>
+      Y después de abrirte mi corazón, quiero hacerte la pregunta que me acompaña desde hace tiempo, la que resume todo lo que siento y todo lo que quiero contigo… y compartir conmigo este camino que apenas comienza, pero que ya siento tan nuestro?<br><br>
+      Gracias por estar conmigo, gracias por ser tú, y gracias por permitirme amarte, hoy y siempre, mi corazón es tuyo,<br>
+      <span class="firma-pequena">pedazo de bella pura poesía loka :v ❤️</span>
+    </p>
+
+    <div style="margin-top: 2rem;">
+      <button id="cerrar" class="boton">Cerrar carta</button>
+      <button id="btnVideo" class="enlace">Ver video</button>
+    </div>
+  </div>
+
+  <!-- Modal con animación de deslice -->
+  <div id="modalVideo" class="modal-video">
+    <div class="modal-contenido">
+      <span id="cerrarVideo" class="cerrar-modal">&times;</span>
+      <iframe id="iframeVideo" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    const abrir = document.getElementById("abrir");
+    const cerrar = document.getElementById("cerrar");
+    const carta = document.getElementById("carta");
+    const musica = document.getElementById("musica");
+    const btnVideo = document.getElementById("btnVideo");
+    const modalVideo = document.getElementById("modalVideo");
+    const cerrarVideo = document.getElementById("cerrarVideo");
+    const iframeVideo = document.getElementById("iframeVideo");
+
+    abrir.addEventListener("click", () => {
+      abrir.style.display = "none";
+      carta.classList.add("visible");
+      musica.play().catch(() => {});
+    });
+
+    cerrar.addEventListener("click", () => {
+      carta.classList.remove("visible");
+      setTimeout(() => {
+        carta.style.display = "none";
+        abrir.style.display = "inline-block";
+        musica.pause();
+        musica.currentTime = 0;
+      }, 600);
+    });
+
+    // Abrir video flotante con deslice hacia arriba
+    btnVideo.addEventListener("click", () => {
+      iframeVideo.src = "https://www.youtube.com/embed/Dbts3CjpVhg?autoplay=1";
+      modalVideo.classList.add("visible");
+    });
+
+    // Cerrar video
+    function cerrarElVideo() {
+      modalVideo.classList.remove("visible");
+      setTimeout(() => {
+        iframeVideo.src = "";
+      }, 400);
+    }
+
+    cerrarVideo.addEventListener("click", cerrarElVideo);
+
+    modalVideo.addEventListener("click", (e) => {
+      if (e.target === modalVideo) {
+        cerrarElVideo();
+      }
+    });
+
+    const observer = new MutationObserver(() => {
+      if (carta.classList.contains("visible")) {
+        carta.style.display = "block";
+      }
+    });
+    observer.observe(carta, { attributes: true });
+
+    const canvas = document.getElementById('estrellas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let estrellas = [];
+
+    function initEstrellas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      estrellas = [];
+      for (let i = 0; i < 120; i++) {
+        estrellas.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 1.5 + 0.7,
+          speed: Math.random() * 0.5 + 0.2
+        });
+      }
+    }
+
+    function animarEstrellas() {
+      ctx.clearRect(0, 0, width, height);
+      estrellas.forEach(estrella => {
+        const gradient = ctx.createRadialGradient(estrella.x, estrella.y, 0, estrella.x, estrella.y, estrella.radius * 6);
+        gradient.addColorStop(0, '#9b3653');
+        gradient.addColorStop(1, 'rgba(139,20,56,0)');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(estrella.x, estrella.y, estrella.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        estrella.y += estrella.speed;
+        if (estrella.y > height) {
+          estrella.y = 0;
+          estrella.x = Math.random() * width;
+        }
+      });
+      requestAnimationFrame(animarEstrellas);
+    }
+
+    window.addEventListener('resize', initEstrellas);
+    initEstrellas();
+    animarEstrellas();
+  </script>
+
+</body>
+</html>
